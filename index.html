@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radisson Blu Resort Visakhapatnam — Foldfolio Experience</title>
+  <meta name="description" content="A 5-star coastal sanctuary on Rushikonda Beach Road, Visakhapatnam. Private Bay of Bengal shoreline, emerald hills, and world-class hospitality.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Extra+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,700;1,800;1,900&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #E8E6E1;
+      color: #141413;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --bg: #E8E6E1;
+      --paper: #F5F4F0;
+      --ink: #141413;
+      --muted: #6B6964;
+      --border: #E4E2DC;
+      --sunset: #D9381E;
+      --amber: #D97706;
+      --navy: #0F2C59;
+      --emerald: #15803D;
+      --cyan: #0284C7;
+      --gold: #B45309;
+      --green: #34C759;
+      --spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ===== SCROLL DRIVER ===== */
+    #scroll-driver { height: 900vh; position: relative; z-index: 1; }
+
+    /* ===== STUDIO BACKDROP ===== */
+    #backdrop {
+      position: fixed; inset: 0; z-index: 2;
+      background: radial-gradient(ellipse 80% 60% at 50% 42%, #F2F0EC 0%, #E8E6E1 55%, #DAD8D3 100%);
+      pointer-events: none;
+    }
+
+    /* ===== PHONE STAGE ===== */
+    #stage {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; align-items: center; justify-content: center;
+      perspective: 1400px;
+      pointer-events: none;
+    }
+
+    /* ===== DEVICE SHELL ===== */
+    #device {
+      position: relative;
+      width: 380px; height: 780px;
+      transform-style: preserve-3d;
+      pointer-events: auto;
+      transition: width 0.01s, height 0.01s;
+    }
+
+    /* Titanium bezel */
+    #device::before {
+      content: '';
+      position: absolute; inset: -12px; z-index: 5;
+      border: 12px solid;
+      border-image: linear-gradient(145deg, #D0CDC7 0%, #B8B5AF 25%, #C8C5BF 50%, #A8A5A0 75%, #C0BDB7 100%) 1;
+      border-radius: 56px;
+      pointer-events: none;
+    }
+
+    /* Specular reflection */
+    #device::after {
+      content: '';
+      position: absolute; inset: -12px; z-index: 6;
+      border-radius: 56px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Side buttons */
+    .hw-btn { position: absolute; right: -16px; width: 4px; border-radius: 0 4px 4px 0; background: linear-gradient(90deg, #B5B2AC, #D0CDC7, #A5A29C); z-index: 7; }
+    .hw-btn.pwr { top: 180px; height: 48px; }
+    .hw-btn.vu { top: 258px; height: 32px; }
+    .hw-btn.vd { top: 300px; height: 32px; }
+
+    /* Camera */
+    #cam {
+      position: absolute; top: 18px; left: 50%; transform: translateX(-50%);
+      width: 14px; height: 14px; border-radius: 50%;
+      background: radial-gradient(circle, #111 35%, #333 60%, #1a1a1a 100%);
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.6), 0 0 0 2.5px #2a2a2a;
+      z-index: 25;
+    }
+
+    /* Center crease */
+    #crease {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 2px; height: 100%;
+      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.1), rgba(0,0,0,0.04));
+      z-index: 24; pointer-events: none;
+    }
+
+    /* ===== SCREEN ===== */
+    #screen {
+      position: absolute; inset: 0;
+      border-radius: 44px;
+      overflow: hidden;
+      background: #0B0B0B;
+      z-index: 3;
+    }
+
+    /* ===== LOCK SCREEN ===== */
+    #lockscreen {
+      position: absolute; inset: 0; z-index: 20;
+      background: linear-gradient(180deg, rgba(8,24,40,0.52) 0%, rgba(8,24,40,0.7) 45%, rgba(7,20,32,0.94) 100%),
+                  url('https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 52px 22px 32px;
+      color: #fff;
+    }
+    #lockscreen::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 100% 45% at 50% 85%, rgba(2,132,199,0.3) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .ls-time {
+      font-family: 'Sofia Sans Extra Condensed', sans-serif;
+      font-size: 92px; font-weight: 800; line-height: 1; letter-spacing: -2px;
+      background: linear-gradient(180deg, #fff 20%, rgba(255,255,255,0.7) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      z-index: 1;
+    }
+    .ls-loc { font-size: 12px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.6; z-index: 1; margin-top: 2px; }
+    .ls-weather {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 22px;
+      padding: 7px 16px; margin-top: 14px;
+      font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.75); z-index: 1;
+    }
+    .ls-weather b { color: #fff; }
+
+    .ls-notifs {
+      position: absolute; bottom: 100px; left: 18px; right: 18px;
+      display: flex; flex-direction: column; gap: 7px; z-index: 1;
+    }
+    .ls-notif {
+      background: rgba(255,255,255,0.07); backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+      padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start;
+    }
+    .ls-notif-icon {
+      width: 30px; height: 30px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
+    }
+    .ls-notif-icon.g { background: linear-gradient(135deg, #34C759, #2FB854); }
+    .ls-notif-icon.y { background: linear-gradient(135deg, #F5C518, #D97706); }
+    .ls-notif-t { font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,0.85); }
+    .ls-notif-d { font-size: 10px; color: rgba(255,255,255,0.5); margin-top: 1px; line-height: 1.3; }
+
+    .ls-prompt {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 7px; z-index: 2;
+    }
+    .ls-bar { width: 130px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.25); overflow: hidden; position: relative; }
+    .ls-bar::after { content: ''; position: absolute; inset: 0; left: -100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent); animation: shim 2.2s infinite; }
+    @keyframes shim { to { left: 100%; } }
+    .ls-txt { font-size: 9px; font-weight: 600; letter-spacing: 1.3px; text-transform: uppercase; color: rgba(255,255,255,0.35); animation: pls 2s ease-in-out infinite; }
+    @keyframes pls { 0%,100%{opacity:.35} 50%{opacity:.85} }
+
+    /* ===== INNER WEBSITE ===== */
+    #inner {
+      position: absolute; inset: 0; z-index: 18;
+      background: var(--paper);
+      overflow-y: auto; overflow-x: hidden;
+      opacity: 0; pointer-events: none;
+      border-radius: 44px;
+      scrollbar-width: none;
+    }
+    #inner::-webkit-scrollbar { display: none; }
+
+    /* Status bar */
+    .sb {
+      position: sticky; top: 0; z-index: 50;
+      height: 42px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 18px; font-size: 10.5px; font-weight: 600;
+      background: rgba(245,244,240,0.88); backdrop-filter: blur(20px);
+      color: var(--ink); letter-spacing: 0.5px;
+    }
+    .sb-r { display: flex; gap: 5px; opacity: 0.6; font-size: 10px; font-weight: 500; }
+
+    /* Nav */
+    .fnav { position: sticky; top: 42px; z-index: 49; display: flex; justify-content: center; padding: 7px 14px; background: rgba(245,244,240,0.55); backdrop-filter: blur(10px); }
+    .npill { display: flex; gap: 0; background: rgba(20,20,19,0.05); border-radius: 22px; padding: 3px; border: 1px solid var(--border); }
+    .ni {
+      padding: 6px 12px; font-size: 10px; font-weight: 600; color: var(--muted);
+      border-radius: 19px; cursor: pointer; transition: all 0.3s var(--spring);
+      white-space: nowrap; user-select: none; letter-spacing: 0.3px;
+    }
+    .ni:hover { color: var(--ink); }
+    .ni.act { background: var(--ink); color: #fff; box-shadow: 0 2px 8px rgba(20,20,19,0.12); }
+
+    /* ---- HERO ---- */
+    .hero { padding: 36px 24px 50px; }
+    .hbrand {
+      font-family: 'Sofia Sans Extra Condensed', sans-serif;
+      font-weight: 900; font-size: 82px; line-height: 0.88; letter-spacing: -1px;
+      text-transform: uppercase; color: var(--ink);
+    }
+    .hbrand .r { font-size: 0.28em; vertical-align: super; opacity: 0.45; }
+    .hsub { font-size: 11px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+    .hsub .dt { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--sunset); vertical-align: middle; margin: 0 6px; }
+    .hblurb { font-size: 13px; line-height: 1.65; color: var(--muted); margin-top: 16px; max-width: 520px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: 32px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .st { padding: 20px 8px; text-align: center; border-right: 1px solid var(--border); }
+    .st:last-child { border-right: none; }
+    .st-n { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 34px; font-weight: 900; line-height: 1; color: var(--ink); }
+    .st-l { font-size: 8.5px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-top: 4px; line-height: 1.3; }
+    .st-s { font-size: 8px; color: var(--muted); opacity: 0.55; margin-top: 2px; }
+
+    /* ---- SECTION COMMON ---- */
+    .sec { padding: 48px 24px; border-bottom: 1px solid var(--border); }
+    .sec:last-of-type { border-bottom: none; }
+    .sh { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; }
+    .st-t { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 32px; font-weight: 900; text-transform: uppercase; letter-spacing: -0.5px; }
+    .st-c { font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 500; color: var(--muted); }
+
+    /* ---- PROJECT CARDS ---- */
+    .pc { border-top: 1px solid var(--border); padding: 16px 0; cursor: pointer; transition: background 0.3s; }
+    .pc:hover { background: rgba(20,20,19,0.015); }
+    .pc-h { display: flex; align-items: flex-start; gap: 10px; }
+    .pc-num { font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 500; color: var(--muted); min-width: 28px; padding-top: 4px; }
+    .pc-info { flex: 1; }
+    .pc-title { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 24px; font-weight: 800; text-transform: uppercase; line-height: 1; transition: color 0.3s; }
+    .pc:hover .pc-title { color: var(--card-c, var(--ink)); }
+    .pc-cat { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); margin-top: 3px; }
+    .pc-hrs { font-size: 9px; color: var(--muted); opacity: 0.65; margin-top: 1px; }
+    .pc-arrow { font-size: 16px; color: var(--muted); transition: transform 0.3s var(--spring); padding-top: 4px; }
+    .pc:hover .pc-arrow { transform: translateX(3px) rotate(-45deg); color: var(--ink); }
+
+    .pc-body { padding-left: 28px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s var(--spring), opacity 0.3s; }
+    .pc.open .pc-body { max-height: 400px; opacity: 1; }
+    .pc-desc { font-size: 11.5px; line-height: 1.6; color: var(--muted); margin-top: 8px; }
+
+    /* ---- HERO BANNER ---- */
+    .h-banner {
+      margin-top: 22px; position: relative; border-radius: 14px; overflow: hidden;
+      height: 200px; box-shadow: 0 8px 24px rgba(20,20,19,0.08); border: 1px solid var(--border);
+      background: #0f172a;
+    }
+    .h-banner-img {
+      width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--spring);
+      display: block;
+    }
+    .h-banner:hover .h-banner-img { transform: scale(1.04); }
+    .h-banner-badges {
+      position: absolute; bottom: 12px; left: 12px; display: flex; gap: 6px; flex-wrap: wrap; z-index: 2;
+    }
+    .hb-pill {
+      font-size: 9.5px; font-weight: 600; background: rgba(20,20,19,0.72); backdrop-filter: blur(10px);
+      color: #fff; padding: 4px 10px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.18);
+    }
+
+    .pc-img {
+      margin-top: 12px; width: 100%; height: 180px;
+      border-radius: 12px; overflow: hidden; position: relative; cursor: pointer;
+      background: #111; border: 1px solid var(--border);
+    }
+    .pc-img > div, .pc-img > img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--spring); display: block; }
+    .pc-img:hover > div, .pc-img:hover > img { transform: scale(1.06); }
+    .img-ov {
+      position: absolute; inset: 0; background: rgba(20,20,19,0.4);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s; border-radius: 12px;
+    }
+    .pc-img:hover .img-ov { opacity: 1; }
+    .img-ov span { font-size: 10px; font-weight: 600; color: #fff; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px); padding: 6px 14px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.2); }
+
+    /* Gradient fallback placeholders */
+    .g1 { background: linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%); }
+    .g2 { background: linear-gradient(135deg, #D9381E 0%, #EF4444 50%, #F87171 100%); }
+    .g3 { background: linear-gradient(135deg, #0F2C59 0%, #1E40AF 50%, #3B82F6 100%); }
+    .g4 { background: linear-gradient(135deg, #15803D 0%, #22C55E 50%, #86EFAC 100%); }
+    .g5 { background: linear-gradient(135deg, #0284C7 0%, #38BDF8 50%, #BAE6FD 100%); }
+    .g6 { background: linear-gradient(135deg, #B45309 0%, #D97706 50%, #FCD34D 100%); }
+
+    /* ---- SERVICES ---- */
+    .sv { border-top: 1px solid var(--border); padding: 16px 0; display: flex; gap: 12px; align-items: flex-start; cursor: pointer; transition: background 0.3s; }
+    .sv:hover { background: rgba(20,20,19,0.015); }
+    .sv:last-child { border-bottom: 1px solid var(--border); }
+    .sv-num { font-family: 'Geist Mono', monospace; font-size: 10px; font-weight: 700; color: var(--muted); min-width: 26px; padding-top: 2px; }
+    .sv-c { flex: 1; }
+    .sv-n { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 20px; font-weight: 800; text-transform: uppercase; line-height: 1; }
+    .sv-d { font-size: 10.5px; line-height: 1.55; color: var(--muted); margin-top: 6px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s var(--spring), opacity 0.3s; }
+    .sv.open .sv-d { max-height: 230px; opacity: 1; }
+    .sv-thumb { margin-top: 10px; width: 100%; height: 110px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .sv-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s var(--spring); display: block; }
+    .sv-thumb:hover img { transform: scale(1.05); }
+    .sv-tg { font-size: 16px; color: var(--muted); transition: transform 0.3s var(--spring); }
+    .sv.open .sv-tg { transform: rotate(45deg); }
+
+    /* ---- REVIEWS ---- */
+    .rf { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
+    .fb {
+      padding: 5px 12px; font-size: 9px; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; border: 1px solid var(--border); border-radius: 18px;
+      background: transparent; color: var(--muted); cursor: pointer; transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    .fb:hover, .fb.act { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+    .rc { border-top: 1px solid var(--border); padding: 14px 0; }
+    .rc:hover { background: rgba(20,20,19,0.015); }
+    .rc-h { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+    .rc-a { font-size: 12px; font-weight: 700; color: var(--ink); }
+    .rc-r { font-size: 9px; font-weight: 600; color: var(--amber); white-space: nowrap; }
+    .rc-m { font-size: 9px; color: var(--muted); margin-top: 1px; letter-spacing: 0.2px; }
+    .rc-t { font-size: 11px; line-height: 1.6; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+    /* ---- ABOUT ---- */
+    .addr { background: rgba(20,20,19,0.025); border-radius: 14px; padding: 16px; font-size: 12px; line-height: 1.6; color: var(--muted); margin-bottom: 20px; }
+    .addr strong { color: var(--ink); }
+    .px { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
+    .px-n { color: var(--ink); font-weight: 500; }
+    .px-d { font-family: 'Geist Mono', monospace; font-size: 10px; color: var(--muted); }
+
+    /* ---- CONTACT CARD ---- */
+    .ccrd { background: var(--ink); color: #fff; border-radius: 20px; margin: 0 10px 16px; padding: 32px 20px; }
+    .ccrd-t { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 28px; font-weight: 900; text-transform: uppercase; }
+    .ccrd-s { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 6px; line-height: 1.5; }
+    .ccrd-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; }
+    .cbtn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 18px; border-radius: 12px; font-size: 12px; font-weight: 700;
+      cursor: pointer; transition: all 0.3s var(--spring); border: none;
+      font-family: 'Inter', sans-serif; letter-spacing: 0.2px;
+    }
+    .cbtn.p { background: linear-gradient(135deg, #34C759, #2FB854); color: #fff; }
+    .cbtn.p:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(52,199,89,0.35); }
+    .cbtn.s { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.12); }
+    .cbtn.s:hover { background: rgba(255,255,255,0.13); transform: translateY(-2px); }
+
+    .ifooter { padding: 18px 24px; text-align: center; font-size: 9px; color: var(--muted); opacity: 0.4; letter-spacing: 0.4px; }
+
+    /* ===== CALL SCREEN ===== */
+    #callscreen {
+      position: absolute; inset: 0; z-index: 22;
+      background: linear-gradient(175deg, rgba(8,24,40,0.86) 0%, rgba(13,37,64,0.92) 40%, rgba(7,20,32,0.96) 100%),
+                  url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 36px 22px; color: #fff;
+      opacity: 0; pointer-events: none;
+      border-radius: 44px;
+    }
+    .ca { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; font-family: 'Sofia Sans Extra Condensed'; margin-bottom: 14px; box-shadow: 0 0 0 3px rgba(255,255,255,0.08), 0 0 36px rgba(2,132,199,0.25); }
+    .cn { font-size: 16px; font-weight: 700; text-align: center; }
+    .cr { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 3px; text-align: center; letter-spacing: 0.4px; }
+    .cs { font-size: 11px; color: rgba(255,255,255,0.55); text-align: center; margin-top: 10px; font-style: italic; line-height: 1.5; max-width: 240px; }
+    .cacts { display: flex; gap: 36px; margin-top: 36px; }
+    .cbt { display: flex; flex-direction: column; align-items: center; gap: 7px; cursor: pointer; transition: transform 0.3s var(--spring); }
+    .cbt:hover { transform: scale(1.08); }
+    .cbt-c { width: 54px; height: 54px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .cbt-c.acc { background: linear-gradient(135deg, #34C759, #28A745); animation: pcl 2s ease-in-out infinite; box-shadow: 0 4px 18px rgba(52,199,89,0.35); }
+    .cbt-c.cb { background: linear-gradient(135deg, #D97706, #B45309); animation: pcl 2s ease-in-out infinite 0.5s; box-shadow: 0 4px 18px rgba(217,119,6,0.35); }
+    @keyframes pcl { 0%,100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    .cbt-l { font-size: 8px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; color: rgba(255,255,255,0.4); text-align: center; max-width: 70px; line-height: 1.3; }
+
+    /* ===== MODE SWITCHER ===== */
+    #modesw {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 100;
+      display: flex; background: rgba(20,20,19,0.88); backdrop-filter: blur(20px);
+      border-radius: 26px; padding: 3px; border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.3); pointer-events: auto;
+    }
+    .mb {
+      padding: 9px 20px; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.4);
+      border-radius: 23px; cursor: pointer; transition: all 0.3s var(--spring);
+      user-select: none; letter-spacing: 0.2px; font-family: 'Inter', sans-serif;
+    }
+    .mb:hover { color: rgba(255,255,255,0.7); }
+    .mb.act { background: rgba(255,255,255,0.12); color: #fff; }
+
+    /* ===== SWAP PHOTOS BTN ===== */
+    #swapbtn {
+      position: fixed; bottom: 24px; left: 24px; z-index: 100;
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(20,20,19,0.72); backdrop-filter: blur(14px);
+      border-radius: 18px; padding: 7px 14px; border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer; transition: all 0.3s var(--spring); pointer-events: auto;
+    }
+    #swapbtn:hover { background: rgba(20,20,19,0.92); transform: translateY(-2px); }
+    #swapbtn span { font-size: 9.5px; font-weight: 600; color: rgba(255,255,255,0.6); }
+
+    /* ===== BOOKING DRAWER ===== */
+    #drawer { position: fixed; inset: 0; z-index: 200; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+    #drawer.open { opacity: 1; pointer-events: auto; }
+    .dov { position: absolute; inset: 0; background: rgba(0,0,0,0.45); }
+    .dcnt {
+      position: relative; width: 100%; max-width: 440px;
+      background: var(--paper); border-radius: 22px 22px 0 0;
+      padding: 28px 20px 36px; transform: translateY(100%);
+      transition: transform 0.5s var(--spring);
+    }
+    #drawer.open .dcnt { transform: translateY(0); }
+    .dh { width: 36px; height: 3px; border-radius: 2px; background: var(--border); margin: 0 auto 20px; }
+    .dt { font-family: 'Sofia Sans Extra Condensed', sans-serif; font-size: 26px; font-weight: 900; text-transform: uppercase; }
+    .df { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .fi {
+      width: 100%; padding: 12px 14px; border: 1px solid var(--border); border-radius: 10px;
+      font-size: 12px; font-family: 'Inter', sans-serif; background: #fff; color: var(--ink);
+      outline: none; transition: border-color 0.3s;
+    }
+    .fi:focus { border-color: var(--navy); }
+    .fi::placeholder { color: var(--muted); opacity: 0.45; }
+    .fr { display: flex; gap: 10px; }
+    .fr .fi { flex: 1; }
+    .fsub {
+      width: 100%; padding: 14px; background: var(--navy); color: #fff; border: none;
+      border-radius: 12px; font-size: 13px; font-weight: 700; font-family: 'Inter', sans-serif;
+      cursor: pointer; transition: all 0.3s var(--spring); margin-top: 6px;
+    }
+    .fsub:hover { background: #0A2048; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,44,89,0.25); }
+
+    /* Reveal animation */
+    .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--spring), transform 0.6s var(--spring); }
+    .rv.vis { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      #device { width: min(340px, 88vw) !important; height: min(700px, 82vh) !important; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .st:nth-child(2) { border-right: none; }
+      .hbrand { font-size: 60px; }
+      #swapbtn { display: none; }
+      .ni { padding: 5px 8px; font-size: 9px; }
+    }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<div id="backdrop"></div>
+<div id="scroll-driver"></div>
+
+<div id="stage">
+  <div id="device">
+    <div class="hw-btn pwr"></div>
+    <div class="hw-btn vu"></div>
+    <div class="hw-btn vd"></div>
+    <div id="cam"></div>
+    <div id="crease"></div>
+
+    <div id="screen">
+      <!-- LOCK SCREEN -->
+      <div id="lockscreen">
+        <div class="ls-time" id="clk">17:45</div>
+        <div class="ls-loc">Rushikonda Coast, Vizag</div>
+        <div class="ls-weather">
+          <b>28°C</b> · Private Bay Breeze · Balaji Hill View
+        </div>
+        <div class="ls-notifs">
+          <div class="ls-notif">
+            <div class="ls-notif-icon g">★</div>
+            <div>
+              <div class="ls-notif-t">4.9/5 Tripadvisor (1,725 Reviews)</div>
+              <div class="ls-notif-d">"One of the best properties on Beach Road"</div>
+            </div>
+          </div>
+          <div class="ls-notif">
+            <div class="ls-notif-icon y">★</div>
+            <div>
+              <div class="ls-notif-t">4.7/5 Google (7,365 Reviews)</div>
+              <div class="ls-notif-d">"Private beach + hilltop temple view"</div>
+            </div>
+          </div>
+        </div>
+        <div class="ls-prompt">
+          <div class="ls-bar"></div>
+          <div class="ls-txt">Scroll to Unfold the Sanctuary ↓</div>
+        </div>
+      </div>
+
+      <!-- INNER WEBSITE -->
+      <div id="inner">
+        <div class="sb">
+          <div>RADISSON BLU® VIZAG</div>
+          <div class="sb-r"><span>5G</span><span>·</span><span>100%</span><span>·</span><span>4.7★ (7.3K)</span></div>
+        </div>
+        <div class="fnav">
+          <div class="npill" id="npill">
+            <div class="ni act" data-t="s-home">Home</div>
+            <div class="ni" data-t="s-work">Spaces</div>
+            <div class="ni" data-t="s-svc">Services</div>
+            <div class="ni" data-t="s-rev">Reviews</div>
+            <div class="ni" data-t="s-abt">About</div>
+          </div>
+        </div>
+
+        <!-- HOME -->
+        <div class="hero" id="s-home">
+          <div class="hbrand rv">RADISSON<br>BLU<span class="r">®</span></div>
+          <div class="hsub rv">Visakhapatnam <span class="dt"></span> Karthikavanam, Rushikonda Beach Road</div>
+          <p class="hblurb rv">A 5-star coastal sanctuary established in 2021. One side private Bay of Bengal shoreline, one side emerald hills crowned by the Sri Venkateswara Swamy (Balaji) Temple.</p>
+          <div class="h-banner rv">
+            <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1400&q=80" alt="Radisson Blu Resort Rushikonda Beach Vizag" class="h-banner-img" loading="eager">
+            <div class="h-banner-badges">
+              <span class="hb-pill">🏖️ Private Shoreline</span>
+              <span class="hb-pill">🛕 Balaji Hill Vista</span>
+              <span class="hb-pill">✨ 5-Star Luxury</span>
+            </div>
+          </div>
+          <div class="stats rv" id="stats-bar">
+            <div class="st"><div class="st-n" data-v="4.7" data-f="1">0</div><div class="st-l">Google Rating</div><div class="st-s" data-v="7365">0 Reviews</div></div>
+            <div class="st"><div class="st-n" data-v="4.9" data-f="1">0</div><div class="st-l">Tripadvisor</div><div class="st-s" data-v="1725">0 Reviews</div></div>
+            <div class="st"><div class="st-n" data-v="99">0</div><div class="st-l">Luxury Rooms</div><div class="st-s">Suites & Villas</div></div>
+            <div class="st"><div class="st-n" data-v="4">0</div><div class="st-l">Dining Venues</div><div class="st-s">365 · Ethnic · Upper Deck · Zest</div></div>
+          </div>
+        </div>
+
+        <!-- WORK -->
+        <div class="sec" id="s-work">
+          <div class="sh rv"><div class="st-t">Spaces & Dining</div><div class="st-c">(06)</div></div>
+          <div class="pc" style="--card-c:#D97706" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">01</div><div class="pc-info"><div class="pc-title">365 All-Day Dining</div><div class="pc-cat">01 / Gastronomy & Live Stations</div><div class="pc-hrs">Daily 06:30 AM – 11:00 PM</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Ocean views, interactive live cooking stations, and our famous wholesome buffet featuring seven artisanal salads, international classics, and fresh morning bakes. Breakfast buffet: ₹1,100 Adults / ₹550 Kids.</div>
+              <div class="pc-img" data-s="365" onclick="event.stopPropagation();upl('365')">
+                <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80" alt="365 All-Day Dining" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pc" style="--card-c:#D9381E" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">02</div><div class="pc-info"><div class="pc-title">Ethnic — Coastal & Andhra Spice</div><div class="pc-cat">02 / Regional Signature Dining</div><div class="pc-hrs">Dinner 07:00 PM – 10:30 PM</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Authentic culinary heritage of the Andhra coast. Hand-ground spices, fresh Bay of Bengal catch, and heirloom recipes served in an intimate, warm setting.</div>
+              <div class="pc-img" data-s="ethnic" onclick="event.stopPropagation();upl('ethnic')">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80" alt="Ethnic Coastal Dining" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pc" style="--card-c:#0F2C59" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">03</div><div class="pc-info"><div class="pc-title">Upper Deck & Zest Pastry Lounge</div><div class="pc-cat">03 / Sundowners & Craft Coffee</div><div class="pc-hrs">Upper Deck 12–11:30 PM · Zest 10 AM–10 PM</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Daytime artisanal coffee and French pastries at Zest; twilight cocktails, coastal breeze, and live acoustic vibes at Upper Deck bar.</div>
+              <div class="pc-img" data-s="udeck" onclick="event.stopPropagation();upl('udeck')">
+                <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?auto=format&fit=crop&w=1200&q=80" alt="Upper Deck Lounge" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pc" style="--card-c:#15803D" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">04</div><div class="pc-info"><div class="pc-title">Private Pool Villas & Ocean Suites</div><div class="pc-cat">04 / 99 Sanctuaries</div><div class="pc-hrs">1-Bed (646 sq.ft) · 2-Bed (1,270 sq.ft) · Presidential</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Private patios, ocean-view balconies, pillow menus, rainfall showers, and secluded garden plunge pools. Children aged 3–10 stay complimentary.</div>
+              <div class="pc-img" data-s="villas" onclick="event.stopPropagation();upl('villas')">
+                <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80" alt="Private Pool Villas" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pc" style="--card-c:#0284C7" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">05</div><div class="pc-info"><div class="pc-title">Private Rushikonda Shoreline</div><div class="pc-cat">05 / Exclusive USP</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Direct gated access to our quiet stretch of golden sand on the Bay of Bengal, framed by the sacred Balaji Temple on the hill.</div>
+              <div class="pc-img" data-s="beach" onclick="event.stopPropagation();upl('beach')">
+                <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" alt="Private Shoreline" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="pc" style="--card-c:#B45309" onclick="tpc(this)">
+            <div class="pc-h"><div class="pc-num">06</div><div class="pc-info"><div class="pc-title">Destination Weddings & Grand Lawns</div><div class="pc-cat">06 / Celebrations & Corporate Retreats</div></div><div class="pc-arrow">↗</div></div>
+            <div class="pc-body">
+              <div class="pc-desc">Beachfront mandaps, pillarless ballrooms, and a detail-obsessed events team trusted by families across India.</div>
+              <div class="pc-img" data-s="wedding" onclick="event.stopPropagation();upl('wedding')">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" alt="Destination Weddings" loading="lazy">
+                <div class="img-ov"><span>📷 Replace Photo</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="sec" id="s-svc">
+          <div class="sh rv"><div class="st-t">Services</div><div class="st-c">(04)</div></div>
+          <div class="sv" onclick="tsv(this)">
+            <div class="sv-num">01.</div>
+            <div class="sv-c">
+              <div class="sv-n">Private Shore & Infinity Pool</div>
+              <div class="sv-d">
+                <p>Year-round outdoor infinity pool with panoramic ocean vistas, dedicated kids' pool, sun loungers, and private beach cabanas directly facing the Bay of Bengal.</p>
+                <div class="sv-thumb"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80" alt="Infinity Pool" loading="lazy"></div>
+              </div>
+            </div>
+            <div class="sv-tg">+</div>
+          </div>
+          <div class="sv" onclick="tsv(this)">
+            <div class="sv-num">02.</div>
+            <div class="sv-c">
+              <div class="sv-n">Athma Spa & Turkish Hammam</div>
+              <div class="sv-d">
+                <p>Full-service wellness sanctuary featuring Ayurvedic therapies, aromatherapy, deep-tissue, Thai & hot-stone massages, plus a traditional Turkish bath/hammam.</p>
+                <div class="sv-thumb"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=800&q=80" alt="Athma Spa" loading="lazy"></div>
+              </div>
+            </div>
+            <div class="sv-tg">+</div>
+          </div>
+          <div class="sv" onclick="tsv(this)">
+            <div class="sv-num">03.</div>
+            <div class="sv-c">
+              <div class="sv-n">Family First & Emergency Care</div>
+              <div class="sv-d">
+                <p>Indoor & outdoor kids' play zones, babysitting, wheelchair-accessible design, and a staff famous for going the extra mile during family emergencies.</p>
+                <div class="sv-thumb"><img src="https://images.unsplash.com/photo-1602002418082-a4443e081dd1?auto=format&fit=crop&w=800&q=80" alt="Family Sanctuary" loading="lazy"></div>
+              </div>
+            </div>
+            <div class="sv-tg">+</div>
+          </div>
+          <div class="sv" onclick="tsv(this)">
+            <div class="sv-num">04.</div>
+            <div class="sv-c">
+              <div class="sv-n">Executive & 24/7 Concierge</div>
+              <div class="sv-d">
+                <p>24-hour business center, airport shuttle (45 mins / 17 km to VTZ Airport), free on-site parking, and express check-in.</p>
+                <div class="sv-thumb"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Concierge" loading="lazy"></div>
+              </div>
+            </div>
+            <div class="sv-tg">+</div>
+          </div>
+        </div>
+
+        <!-- REVIEWS -->
+        <div class="sec" id="s-rev">
+          <div class="sh rv"><div class="st-t">Guest Stories</div><div class="st-c">(09)</div></div>
+          <div class="rf" id="rflt">
+            <button class="fb act" data-f="all">All</button>
+            <button class="fb" data-f="family">Family</button>
+            <button class="fb" data-f="wedding">Weddings</button>
+            <button class="fb" data-f="business">Business</button>
+            <button class="fb" data-f="notes">Notes</button>
+          </div>
+          <div id="rcont">
+            <div class="rc" data-c="wedding"><div class="rc-h"><div class="rc-a">Rohit Mathur</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Destination Wedding</div><div class="rc-t">"Radisson Blu, Visakhapatnam truly exceeded our expectations while hosting our destination wedding. From the very beginning, the entire team was extremely professional, supportive, and detail-oriented."</div></div>
+            <div class="rc" data-c="family"><div class="rc-h"><div class="rc-a">Pallavi A</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Family Holiday</div><div class="rc-t">"The management and staff have shown extra care and went the extra mile to support an unexpected family emergency. They took extreme good care of my kid and made us feel home."</div></div>
+            <div class="rc" data-c="family"><div class="rc-h"><div class="rc-a">SARADHI JASTI</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Friends</div><div class="rc-t">"A pleasant location to stay with... One side beach, one side hill and a Balaji temple on hill will change your mood."</div></div>
+            <div class="rc" data-c="all"><div class="rc-h"><div class="rc-a">Mr Raju</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Rooms 5.0 · Service 5.0 · Location 5.0</div><div class="rc-t">"The ambiance is elegant, the rooms are luxurious and perfectly maintained, and the hospitality is truly world-class... A perfect blend of luxury, comfort, and sophistication."</div></div>
+            <div class="rc" data-c="all"><div class="rc-h"><div class="rc-a">Ambika Bhandari</div><div class="rc-r">★★★★☆ 4/5</div></div><div class="rc-m">Google · Couple</div><div class="rc-t">"We had a marvelous time at the resort. The main USP is the private beach they have."</div></div>
+            <div class="rc" data-c="family"><div class="rc-h"><div class="rc-a">Yusuf Taherali</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Family</div><div class="rc-t">"From check-in to check-out, everything was seamless and reflected true 5-star service. The staff across the board – front desk, housekeeping, and restaurant – were courteous."</div></div>
+            <div class="rc" data-c="all"><div class="rc-h"><div class="rc-a">Sharad Srivastava</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google</div><div class="rc-t">"This is one of the best properties on Beach Road. The team is extremely welcoming, and both the rooms and services are of a very high standard."</div></div>
+            <div class="rc" data-c="business"><div class="rc-h"><div class="rc-a">hoppy hobbit</div><div class="rc-r">★★★★★ 5/5</div></div><div class="rc-m">Google · Business</div><div class="rc-t">"I was already prepared for the luxury and comfort... to my surprise it was even better than I thought. The warm welcoming of the staff and the little things they cared about."</div></div>
+            <div class="rc" data-c="notes"><div class="rc-h"><div class="rc-a">Kartick Vaddadi & Rituparna Das</div><div class="rc-r">★★★★☆ 4/5</div></div><div class="rc-m">Google · Culinary & Room Notes</div><div class="rc-t">"Tasty buffet with a wide variety of healthy food, like seven salads... Rooms were clean and spacious with a view of the ocean from the balcony." (Note: Soaking bathtubs and express iron delivery badged by room category for transparency.)</div></div>
+          </div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="sec" id="s-abt">
+          <div class="sh rv"><div class="st-t">The Coast</div></div>
+          <div class="addr rv"><strong>Radisson Blu Resort Visakhapatnam</strong><br>Karthikavanam, Rushikonda Beach, Yendada,<br>Visakhapatnam, Andhra Pradesh 530045, India</div>
+          <div class="px rv"><span class="px-n">🏖️ Rushikonda Beach</span><span class="px-d">2.2 km</span></div>
+          <div class="px rv"><span class="px-n">🦁 Indira Gandhi Zoo</span><span class="px-d">3.6 km</span></div>
+          <div class="px rv"><span class="px-n">🏔️ Kailasagiri</span><span class="px-d">7.0 km</span></div>
+          <div class="px rv"><span class="px-n">🚢 Submarine Museum</span><span class="px-d">8.0 km</span></div>
+          <div class="px rv"><span class="px-n">🏙️ City Center</span><span class="px-d">12 km</span></div>
+          <div class="px rv"><span class="px-n">✈️ VTZ Airport</span><span class="px-d">17 km</span></div>
+        </div>
+
+        <!-- CONTACT -->
+        <div style="padding:0 0 14px">
+          <div class="ccrd">
+            <div class="ccrd-t rv">Book Your<br>Sanctuary</div>
+            <div class="ccrd-s rv">Ocean-balcony rooms from ₹8,499/night. Beachfront wedding packages available.</div>
+            <div class="ccrd-btns rv">
+              <button class="cbtn p" onclick="openD()">🏨 Reserve Now</button>
+              <button class="cbtn s" onclick="window.open('https://wa.me/918912345678','_blank')">💬 WhatsApp Concierge</button>
+              <button class="cbtn s" onclick="window.open('tel:+918912345678')">📞 Call Front Desk</button>
+            </div>
+          </div>
+        </div>
+        <div class="ifooter">© 2026 Radisson Blu Resort Visakhapatnam · All Rights Reserved</div>
+      </div>
+
+      <!-- CALL SCREEN -->
+      <div id="callscreen">
+        <div class="ca">RB</div>
+        <div class="cn">Faraz Ahmad</div>
+        <div class="cr">Hospitality Concierge — Radisson Blu Visakhapatnam</div>
+        <div class="cs">"Ready for your ocean-balcony stay or beachfront wedding?"</div>
+        <div class="cacts">
+          <div class="cbt" onclick="openD()"><div class="cbt-c acc">📞</div><div class="cbt-l">Swipe to Reserve</div></div>
+          <div class="cbt" onclick="window.open('https://wa.me/918912345678','_blank')"><div class="cbt-c cb">💬</div><div class="cbt-l">Request Callback</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODE SWITCHER -->
+<div id="modesw">
+  <div class="mb act" id="mf" onclick="setM('f')">Folded</div>
+  <div class="mb" id="mu" onclick="setM('u')">Unfolded</div>
+</div>
+
+<!-- SWAP PHOTOS -->
+<div id="swapbtn" onclick="swapPrompt()"><span>📷</span><span>Swap Demo Photos</span></div>
+
+<!-- BOOKING DRAWER -->
+<div id="drawer">
+  <div class="dov" onclick="closeD()"></div>
+  <div class="dcnt">
+    <div class="dh"></div>
+    <div class="dt">Reserve Your Stay</div>
+    <div class="df">
+      <input class="fi" type="text" placeholder="Full Name">
+      <input class="fi" type="email" placeholder="Email Address">
+      <input class="fi" type="tel" placeholder="Phone Number">
+      <div class="fr"><input class="fi" type="date" placeholder="Check-in"><input class="fi" type="date" placeholder="Check-out"></div>
+      <select class="fi"><option value="" disabled selected>Select Room Type</option><option>Deluxe Ocean View</option><option>Premium Suite</option><option>1-Bed Private Pool Villa</option><option>2-Bed Private Pool Villa</option><option>Presidential Suite</option></select>
+      <textarea class="fi" rows="3" placeholder="Special Requests (wedding, event, dietary needs...)"></textarea>
+      <button class="fsub" onclick="subBook()">Send Reservation Inquiry</button>
+    </div>
+  </div>
+</div>
+
+<input type="file" class="hidden" id="fup" accept="image/*" onchange="handleUp(event)">
+
+<script>
+// ===== STATE =====
+let prog = 0, manMode = false, activeSlot = null, counted = false;
+const D = document, $ = s => D.getElementById(s), Q = s => D.querySelectorAll(s);
+
+// Refs
+const device = $('device'), screen_ = $('screen'), inner = $('inner');
+const ls = $('lockscreen'), cs = $('callscreen'), crease = $('crease');
+const sd = $('scroll-driver'), bd = $('backdrop');
+
+// Clock
+function uc() { const n=new Date(); $('clk').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0'); }
+uc(); setInterval(uc, 10000);
+
+// Lerp/Clamp
+const lerp=(a,b,t)=>a+(b-a)*Math.max(0,Math.min(1,t));
+const clamp=(v,mn,mx)=>Math.max(mn,Math.min(mx,v));
+const eio=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+const eoc=t=>1-Math.pow(1-t,3);
+
+// Animation phases
+const P1E=0.12, P2E=0.24, P3E=0.88;
+
+function animate(p) {
+  if (manMode) return;
+  const W=window.innerWidth, H=window.innerHeight;
+  const phoneW=Math.min(380,W*0.88), phoneH=Math.min(780,H*0.92);
+  const tabW=Math.min(1360,W*0.92), tabH=H*0.86;
+
+  if (p <= P1E) {
+    // CLOSED
+    device.style.width=phoneW+'px'; device.style.height=phoneH+'px';
+    const f=Math.sin(Date.now()*0.0008)*4;
+    device.style.transform=`translateY(${f}px)`;
+    screen_.style.borderRadius='44px';
+    ls.style.opacity='1'; ls.style.pointerEvents='auto';
+    inner.style.opacity='0'; inner.style.pointerEvents='none';
+    cs.style.opacity='0'; cs.style.pointerEvents='none';
+    crease.style.opacity='1';
+    bd.style.opacity='1';
+    $('mf').classList.add('act'); $('mu').classList.remove('act');
+
+    // Subtle scale breathing
+    const breathe = 1 + Math.sin(Date.now()*0.001)*0.005;
+    device.style.transform=`translateY(${f}px) scale(${breathe})`;
+  }
+  else if (p <= P2E) {
+    // UNFOLDING
+    const t=eio(clamp((p-P1E)/(P2E-P1E),0,1));
+    const cw=lerp(phoneW,tabW,t), ch=lerp(phoneH,tabH,t);
+    device.style.width=cw+'px'; device.style.height=ch+'px';
+    device.style.transform='translateY(0) scale(1)';
+    
+    // 3D fold effect via perspective + scaleX
+    const foldAngle = lerp(0, 180, t);
+    const scaleEffect = 1 + t * 0.02;
+    
+    // Cross-fade
+    ls.style.opacity=String(1-t); ls.style.pointerEvents=t>0.5?'none':'auto';
+    inner.style.opacity=String(t); inner.style.pointerEvents=t>0.5?'auto':'none';
+    cs.style.opacity='0'; cs.style.pointerEvents='none';
+    
+    // Crease fades
+    crease.style.opacity=String(1-t*0.95);
+    
+    // Border radius transition
+    const r=lerp(44,40,t);
+    screen_.style.borderRadius=r+'px';
+    
+    // Backdrop fade
+    bd.style.opacity=String(1-t*0.3);
+    
+    // Bezel transition
+    device.style.setProperty('--br', r+12+'px');
+
+    $('mf').classList.remove('act'); $('mu').classList.add('act');
+  }
+  else if (p <= P3E) {
+    // CONTENT SCROLL
+    const t=clamp((p-P2E)/(P3E-P2E),0,1);
+    device.style.width=tabW+'px'; device.style.height=tabH+'px';
+    device.style.transform='translateY(0) scale(1)';
+    screen_.style.borderRadius='40px';
+    ls.style.opacity='0'; ls.style.pointerEvents='none';
+    inner.style.opacity='1'; inner.style.pointerEvents='auto';
+    cs.style.opacity='0'; cs.style.pointerEvents='none';
+    crease.style.opacity='0.05';
+    bd.style.opacity='0.7';
+
+    // Scroll inner content
+    const sH=inner.scrollHeight-inner.clientHeight;
+    inner.scrollTop=sH*t;
+
+    $('mf').classList.remove('act'); $('mu').classList.add('act');
+  }
+  else {
+    // REFOLDING → CALL
+    const t=eio(clamp((p-P3E)/(1-P3E),0,1));
+    const cw=lerp(tabW,phoneW,t), ch=lerp(tabH,phoneH,t);
+    device.style.width=cw+'px'; device.style.height=ch+'px';
+    device.style.transform='translateY(0) scale(1)';
+    
+    const r=lerp(40,44,t);
+    screen_.style.borderRadius=r+'px';
+    
+    inner.style.opacity=String(1-t); inner.style.pointerEvents=t>0.5?'none':'auto';
+    ls.style.opacity='0'; ls.style.pointerEvents='none';
+    cs.style.opacity=String(t); cs.style.pointerEvents=t>0.5?'auto':'none';
+    
+    crease.style.opacity=String(t);
+    bd.style.opacity=String(0.7+t*0.3);
+
+    $('mf').classList.add('act'); $('mu').classList.remove('act');
+  }
+}
+
+// SCROLL
+let raf=null;
+function onS() {
+  if(raf) cancelAnimationFrame(raf);
+  raf=requestAnimationFrame(()=>{
+    const st=window.scrollY, mx=sd.scrollHeight-window.innerHeight;
+    prog=clamp(st/mx,0,1);
+    animate(prog);
+  });
+}
+window.addEventListener('scroll',onS,{passive:true});
+window.addEventListener('resize',()=>{ if(!manMode) animate(prog); });
+
+// Float animation for closed state
+function floatLoop() {
+  if (prog <= P1E && !manMode) animate(prog);
+  requestAnimationFrame(floatLoop);
+}
+requestAnimationFrame(floatLoop);
+
+// Initial
+requestAnimationFrame(()=>animate(0));
+
+// MODE SWITCH
+function setM(m) {
+  manMode=true;
+  const mx=sd.scrollHeight-window.innerHeight;
+  if(m==='f') {
+    window.scrollTo({top:0,behavior:'smooth'});
+    setTimeout(()=>{manMode=false;animate(0);},600);
+  } else {
+    window.scrollTo({top:mx*0.45,behavior:'smooth'});
+    setTimeout(()=>{manMode=false;},600);
+  }
+}
+
+// NAV
+Q('.ni').forEach(n=>n.addEventListener('click',function(){
+  Q('.ni').forEach(x=>x.classList.remove('act'));
+  this.classList.add('act');
+  const el=$(this.dataset.t);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// INNER SCROLL NAV HIGHLIGHT
+inner.addEventListener('scroll',function(){
+  const secs=['s-home','s-work','s-svc','s-rev','s-abt'];
+  let cur='s-home';
+  secs.forEach(id=>{const el=$(id);if(el&&el.offsetTop<=inner.scrollTop+100)cur=id;});
+  Q('.ni').forEach(n=>n.classList.toggle('act',n.dataset.t===cur));
+});
+
+// TOGGLE CARDS
+function tpc(c){const w=c.classList.contains('open');Q('.pc.open').forEach(x=>x.classList.remove('open'));if(!w)c.classList.add('open');}
+function tsv(s){const w=s.classList.contains('open');Q('.sv.open').forEach(x=>x.classList.remove('open'));if(!w)s.classList.add('open');}
+
+// FILTERS
+Q('.fb').forEach(b=>b.addEventListener('click',function(){
+  Q('.fb').forEach(x=>x.classList.remove('act'));this.classList.add('act');
+  const f=this.dataset.f;
+  Q('.rc').forEach(c=>{
+    if(f==='all') c.style.display='';
+    else c.style.display=c.dataset.c===f?'':'none';
+  });
+}));
+
+// COUNTERS
+function animC(){
+  if(counted)return;counted=true;
+  Q('.st-n[data-v]').forEach(el=>{
+    const tv=parseFloat(el.dataset.v),isF=el.dataset.f==='1',dur=1400,st=performance.now();
+    (function tick(n){
+      const p=eoc(Math.min((n-st)/dur,1)),cv=p*tv;
+      el.textContent=isF?cv.toFixed(1)+'★':Math.round(cv);
+      if(n-st<dur)requestAnimationFrame(tick);
+    })(st);
+  });
+  Q('.st-s[data-v]').forEach(el=>{
+    const tv=parseInt(el.dataset.v),dur=1600,st=performance.now();
+    (function tick(n){
+      const p=eoc(Math.min((n-st)/dur,1));
+      el.textContent=Math.round(p*tv).toLocaleString()+' Reviews';
+      if(n-st<dur)requestAnimationFrame(tick);
+    })(st);
+  });
+}
+
+// REVEAL OBSERVER
+const rObs=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');if(e.target.id==='stats-bar'||e.target.querySelector('.stats'))animC();}});
+},{root:inner,threshold:0.1});
+Q('.rv').forEach(e=>rObs.observe(e));
+// Stats observer
+const sObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)animC();});},{root:inner,threshold:0.2});
+const sb=$('stats-bar');if(sb)sObs.observe(sb);
+
+// IMAGE UPLOAD
+function upl(s){activeSlot=s;$('fup').click();}
+function handleUp(e){
+  const f=e.target.files[0];if(!f||!activeSlot)return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    const d=ev.target.result,sl=D.querySelector(`.pc-img[data-s="${activeSlot}"]`);
+    if(sl){
+      const img=sl.querySelector('img');
+      if(img){img.src=d;}
+      else{
+        const old=sl.querySelector('div[class^="g"]');
+        if(old){const newImg=D.createElement('img');newImg.src=d;newImg.style.cssText='width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1)';old.replaceWith(newImg);}
+      }
+      try{localStorage.setItem('rbv-'+activeSlot,d);}catch(err){}
+    }
+    activeSlot=null;e.target.value='';
+  };r.readAsDataURL(f);
+}
+function swapPrompt(){
+  const s=['365','ethnic','udeck','villas','beach','wedding'];
+  const n=['365 All-Day Dining','Ethnic Restaurant','Upper Deck & Zest','Villas & Suites','Private Beach','Weddings & Events'];
+  let m='Choose a photo slot:\n\n';s.forEach((x,i)=>m+=(i+1)+'. '+n[i]+'\n');
+  const c=prompt(m+'\nEnter number (1-6):');
+  if(c&&c>=1&&c<=6){activeSlot=s[c-1];$('fup').click();}
+}
+// Restore saved
+['365','ethnic','udeck','villas','beach','wedding'].forEach(s=>{
+  const d=localStorage.getItem('rbv-'+s);if(d){
+    const sl=D.querySelector(`.pc-img[data-s="${s}"]`);if(sl){
+      const img=sl.querySelector('img');
+      if(img){img.src=d;}
+      else{
+        const old=sl.querySelector('div[class^="g"]');
+        if(old){const newImg=D.createElement('img');newImg.src=d;newImg.style.cssText='width:100%;height:100%;object-fit:cover;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1)';old.replaceWith(newImg);}
+      }
+    }
+  }
+});
+
+// DRAWER
+function openD(){$('drawer').classList.add('open');}
+function closeD(){$('drawer').classList.remove('open');}
+function subBook(){
+  const n=D.querySelector('.df input[type="text"]').value;
+  if(!n){alert('Please enter your name.');return;}
+  alert('Thank you, '+n+'! Your reservation inquiry has been sent. Our concierge team will contact you within 2 hours.');
+  closeD();
+}
+
+// KEYBOARD
+D.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeD();
+  if(e.key==='f'||e.key==='F')setM('f');
+  if(e.key==='u'||e.key==='U')setM('u');
+});
+</script>
+</body>
+</html>
